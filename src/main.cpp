@@ -1,4 +1,4 @@
-//  Created by Qichen on 9/17/16.
+//  Created by Qichen on Nov 12, 2016
 // As required opengl toolkit's api about any matrix and vector related
 // calculations are not used. The author implemented them.
 //  Copyright © 2016 Qichen Wang. All rights reserved.
