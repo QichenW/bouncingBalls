@@ -1,0 +1,64 @@
+
+n 21
+
+o 1
+
+i 0
+
+p     -25.0000         0   43.3013
+p       0.0000         0   50.0000
+p      25.0000         0   43.3013
+p      43.3013         0   25.0000
+p      50.0000         0   -0.0000
+p      43.3013         0  -25.0000
+p      25.0000         0  -43.3013
+p      -0.0000         0  -50.0000
+p     -25.0000         0  -43.3013
+p     -43.3013         0  -25.0000
+p     -50.0000         0    0.0000
+p     -43.3013         0   25.0000
+p     -25.0000         0   43.3013
+p       0.0000         0   50.0000
+p      25.0000         0   43.3013
+p      43.3013         0   25.0000
+p      50.0000         0         0
+p      43.3013         0  -25.0000
+p      25.0000         0  -43.3013
+p      -0.0000         0  -50.0000
+p     -25.0000         0  -43.3013
+
+e         0  -480     0
+e         0  -450     0
+e         0  -420     0
+e         0  -390     0
+e         0  -360     0
+e         0  -330     0
+e         0  -300     0
+e         0  -270     0
+e         0  -240     0
+e         0  -210     0
+e         0  -180     0
+e         0  -150     0
+e         0  -120     0
+e         0   -90     0
+e         0   -60     0
+e         0   -30     0
+e         0     0     0
+e         0    30     0
+e         0    60     0
+e         0    90     0
+e         0   120     0
+
+
+### lines start with "#" are comments; in-line comments are NOT supported.
+### First, note the number of key frames, using a line starting with 'n'
+### Second, provide n positions
+### 'p' is followed by three float numbers separated by space,
+### suggesting the x-y-z coordinates of a control point
+### there must be n entries
+### Then, provide n positions
+### 'e' is followed by three float numbers separated by space,
+### suggesting the pitch, yaw roll of a frame in degrees
+### there must be n entries
+### Then, choose the orientation presentation 0 -> euler angle; 1-> quaternion
+### Finally, choose the interpolation method 0 -> 3rd order Catmull-Rom; 1 -> 3rd order B-spline
