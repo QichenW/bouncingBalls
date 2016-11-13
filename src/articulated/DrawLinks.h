@@ -6,7 +6,7 @@
 #define ANIMATIONS_DRAWLINKS_H
 
 #include "SimpleObjLoader.h"
-#include "setup/Preferences.h"
+#include "setup/PhysicsPrefs.h"
 #include "articulated/Part.h"
 #include "matrix/RotationHelper.h"
 

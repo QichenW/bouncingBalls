@@ -10,6 +10,7 @@
 #include "matrix/RotationHelper.h"
 #if defined(__APPLE__)
 #include <GLUT/glut.h>
+#include <setup/PhysicsPrefs.h>
 
 
 #else
@@ -18,11 +19,12 @@
 
 class DrawObjects {
 public:
-    static void prepareObjects(Object **objects,GLfloat **positions, GLfloat **orientations,int numberOfBalls);
     static void draw(Object **objects);
 
     static int numberOfObjects;
 
+
+    static void prepareObjects(PhysicsPrefs *pPrefs, Object **pObjects);
 
 private:
     static const char* BALL_OBJ_NAME;

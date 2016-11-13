@@ -3,23 +3,24 @@
 //
 
 #include <cstdlib>
-#include <setup/Preferences.h>
+#include <setup/PhysicsPrefs.h>
 #include <nfd.h>
-#include <setup/SetupFileLoader.h>
+#include <setup/PhysicsSetupFileLoader.h>
 #include "UserInputManager.h"
 
 static int* windowID;
 
-Preferences *prefsPointer;
-
+PhysicsPrefs *prefsPointer;
+Object ** allObjs;
 /****
  * This function describes the behavior of the right mouse button menu.
  * @param window is the identifier the opengl window
  * @param preferences is the setup for current animation
  */
-UserInputManager::UserInputManager(int * window, Preferences* preferences) {
+UserInputManager::UserInputManager(int * window, PhysicsPrefs * preferences, Object ** allObjects) {
     windowID = window;
     prefsPointer = preferences;
+    allObjs = allObjects;
 }
 
 void UserInputManager::setMouseMenuBehavior(int id){
@@ -28,9 +29,9 @@ void UserInputManager::setMouseMenuBehavior(int id){
         case 1:
             // choose the user provided text file in a "native file dialog"
             if (loadUserInputFromFileDialog()) {
-                prefsPointer->setKeyFramesLoaded(true);
-                // then calculate the coefficient matrices for interpolation use
-                prefsPointer->calculateCoefficientMatrices();
+                prefsPointer->setInputLoaded(true);
+                // TODO test this,
+                DrawObjects::prepareObjects(prefsPointer, allObjs);
             }
             break;
         //reset the preferences
@@ -38,11 +39,10 @@ void UserInputManager::setMouseMenuBehavior(int id){
             prefsPointer->resetPreferences();
             break;
         case 3 :
-            if (!prefsPointer->getAreKeyFramesLoaded()){
+            if (!prefsPointer->getAreInputLoaded()){
                 /* TODO  show a message to let user load file first */
                 break;
             }
-            prefsPointer->resetTimeProgress();
             prefsPointer->setIsPlaying(true);
             break;
         default :
@@ -105,16 +105,6 @@ void UserInputManager::mouseFunc (int button, int state, int x, int y) {
 void UserInputManager::createMouseMenu() {
 
     glutCreateMenu(UserInputManager::setMouseMenuBehavior);
-
-/** sub-menus not implemented for now **/
-//    int orientation_menu = glutCreateMenu(orientationMenu);
-//    glutAddMenuEntry ("Euler Angle", 1);
-//    glutAddMenuEntry ("Quaternion", 2);
-//    int inbetweening_menu = glutCreateMenu(UserInputManager::inbetweeningMenu);
-//    glutAddMenuEntry ("Catmul-Rom", 1);
-//    glutAddMenuEntry ("B-splines", 2);
-//    glutAddSubMenu ("Orientation", orientation_menu);
-//    glutAddSubMenu ("Inbetweening", inbetweening_menu);
     glutAddMenuEntry ("Load", 1);
     glutAddMenuEntry ("Reset", 2);
     glutAddMenuEntry ("Start", 3);
@@ -149,7 +139,7 @@ bool UserInputManager::loadUserInputFromFileDialog() {
     nfdresult_t result = NFD_OpenDialog( NULL, NULL, &outPath );
 
     if ( result == NFD_OKAY ) {
-        SetupFileLoader::loadPreferencesFromTextFile(outPath, prefsPointer);
+        PhysicsSetupFileLoader::loadPreferencesFromTextFile(outPath, prefsPointer);
         puts("Success!");
         puts(outPath);
         free(outPath);

@@ -18,7 +18,7 @@
 class Ball: public Object {
 public:
     Ball(int id, int listId, GLfloat mass, bool isFixed, GLfloat *orientation,
-         GLfloat *translation, GLfloat * velocity);
+         GLfloat *translation, GLfloat * velocity, GLfloat * angularVelocity);
 
     void changeAcceleration(GLfloat *acceleration);
 

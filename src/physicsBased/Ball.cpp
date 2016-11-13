@@ -11,14 +11,14 @@ const GLfloat Ball::airFrictionFactor = 0.3; // airFriction is totally related t
 const GLfloat Ball::groundFrictionAcclrtn = 0.1; // groundFriction is totally related to mass
 
 Ball::Ball(int id, int listId, GLfloat mass, bool isFixed, GLfloat *orientation,
-           GLfloat *translation, GLfloat * velocity) {
+           GLfloat *translation, GLfloat * velocity, GLfloat * angularVelocity) {
     Object(id, listId, mass, isFixed, orientation, translation);
     int i;
     radius = 2;
     for (i = 0 ; i < 3; i++){
         *(acceleration + i) = *(GRAVITY + i);
         *(Ball::velocity + i) = *(velocity + i);
-        *(Ball::angluarVelo + i) = 0;
+        *(Ball::angluarVelo + i) = *(angularVelocity + i);
         *(angularAcclrtn + i) = 0;
     }
 }
