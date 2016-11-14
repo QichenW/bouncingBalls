@@ -41,7 +41,7 @@ target_link_libraries(BouncingBalls ${EXTRA_LIBS} nativefiledialog)
 if (NOT CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_CURRENT_BINARY_DIR)
 
     # list of files for which we add a copy rule
-    set(object_files head.obj torso.obj thigh.obj calf.obj foot.obj neck.obj upper_arm.obj forearm.obj fist.obj wall.obj soccer_ball.obj)
+    set(object_files wall.obj soccer_ball.obj)
 
     foreach(item IN LISTS object_files)
         message(STATUS ${item})
@@ -54,15 +54,7 @@ if (NOT CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_CURRENT_BINARY_DIR)
 endif()
 
 # files are only copied if a target depends on them
-add_custom_target(obj ALL DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/head.obj"
-        "${CMAKE_CURRENT_BINARY_DIR}/torso.obj"
-        "${CMAKE_CURRENT_BINARY_DIR}/thigh.obj"
-        "${CMAKE_CURRENT_BINARY_DIR}/calf.obj"
-        "${CMAKE_CURRENT_BINARY_DIR}/foot.obj"
-        "${CMAKE_CURRENT_BINARY_DIR}/neck.obj"
-        "${CMAKE_CURRENT_BINARY_DIR}/upper_arm.obj"
-        "${CMAKE_CURRENT_BINARY_DIR}/forearm.obj"
-        "${CMAKE_CURRENT_BINARY_DIR}/fist.obj"
+add_custom_target(obj ALL DEPENDS
         "${CMAKE_CURRENT_BINARY_DIR}/wall.obj"
         "${CMAKE_CURRENT_BINARY_DIR}/soccer_ball.obj")
 # add the dependency project to the project target

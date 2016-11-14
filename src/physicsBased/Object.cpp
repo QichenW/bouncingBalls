@@ -24,10 +24,9 @@ Object::Object(int id, GLuint listId, GLfloat mass, bool isFixed, GLfloat *orien
         *(Object::orientation + i) = *(orientation + i);
     }
 
-    if(isFixed){
-        setFlattenedTransformationMatrix(RotationHelper::
-                                         generateFlattenedTransformationMatrix(orientation,translation,false));
-    }
+    setFlattenedTransformationMatrix(RotationHelper::
+                                     generateFlattenedTransformationMatrix(orientation,translation,false));
+
 }
 
 void Object::setFlattenedTransformationMatrix(GLfloat *flattenedTransformationMatrix) {
@@ -47,7 +46,7 @@ GLfloat *Object::getFlattenedTransformationMatrix() {
     return flattenedTransformationMatrix;
 }
 
-GLfloat *Object::getTranslation() const {
+GLfloat *Object::getTranslation() {
     return translation;
 }
 

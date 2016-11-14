@@ -19,11 +19,15 @@
 class SimpleObjLoader
 {
 public:
-    static GLuint loadObj(char *fileName, int objNo, float scale);
+    static GLuint loadObj(char *fileName, GLuint objNo, float scale, bool isQuad, bool hasVt, bool hasVn);
+
+    static void recordObjectAsQuads();
 
     static void recordObjectAsTrianglesWithNoVt();
 
     static void recordObjectAsTrianglesWithNoVtNoVn();
+
+    static void recordObjectAsQuadsWithNoVtNoVn();
 };
 
 #endif //GLUTPROJECT_SIMPLEOBJHEADER_H

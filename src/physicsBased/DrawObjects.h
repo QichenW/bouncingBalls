@@ -10,7 +10,8 @@
 #include "matrix/RotationHelper.h"
 #if defined(__APPLE__)
 #include <GLUT/glut.h>
-#include <setup/PhysicsPrefs.h>
+#include "setup/PhysicsPrefs.h"
+#include <vector>
 
 
 #else

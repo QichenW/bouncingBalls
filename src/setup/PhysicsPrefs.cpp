@@ -71,34 +71,38 @@ void PhysicsPrefs::setNumberOfObjects(int i) {
 
 }
 
-void PhysicsPrefs::addOneInitPosition(GLfloat *onePositions, int i) {
+void PhysicsPrefs::addOneInitPosition(GLfloat *onePositions) {
     int j;
-    listOfPositions[i] = new GLfloat[3];
+    GLfloat *pv = (GLfloat *) malloc(sizeof(GLfloat) * 3);
     for (j = 0; j < 3; j++){
-        listOfPositions[i][j] = *(onePositions + j);
+        pv[j] = *(onePositions + j);
     }
+    listOfPositions.push_back(pv);
 }
 
-void PhysicsPrefs::addOneInitOrientation(GLfloat *oneOrientation, int i) {
+void PhysicsPrefs::addOneInitOrientation(GLfloat *oneOrientation) {
     int j;
-    listOfEulerAngle[i] = new GLfloat[3];
+    GLfloat *ov = (GLfloat *) malloc(sizeof(GLfloat) * 3);
     for (j = 0; j < 3; j++){
-        listOfEulerAngle[i][j] = *(oneOrientation + j);
+        ov[j] = *(oneOrientation + j);
     }
+    listOfEulerAngle.push_back(ov);
 }
 
-void PhysicsPrefs::addOneVelocity(GLfloat *oneVelocity, int i) {
+void PhysicsPrefs::addOneVelocity(GLfloat *oneVelocity) {
     int j;
-    listOfVelocity[i] = new GLfloat[3];
+    GLfloat *vv = (GLfloat *) malloc(sizeof(GLfloat) * 3);
     for (j = 0; j < 3; j++){
-        listOfVelocity[i][j] = *(oneVelocity + j);
+        vv[j] = *(oneVelocity + j);
     }
+    listOfVelocity.push_back(vv);
 }
 
-void PhysicsPrefs::addOneAngularVelo(GLfloat *oneAngularVelo, int i) {
+void PhysicsPrefs::addOneAngularVelo(GLfloat *oneAngularVelo) {
     int j;
-    listOfAngularVelo[i] = new GLfloat[3];
+    GLfloat *av = (GLfloat *) malloc(sizeof(GLfloat) * 3);
     for (j = 0; j < 3; j++){
-        listOfAngularVelo[i][j] = *(oneAngularVelo + j);
+        av[j] = *(oneAngularVelo + j);
     }
+    listOfAngularVelo.push_back(av);
 }

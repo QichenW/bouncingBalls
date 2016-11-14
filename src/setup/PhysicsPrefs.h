@@ -8,7 +8,7 @@
 #if defined(__APPLE__)
 #include <GLUT/glut.h>
 #include <string>
-
+#include <vector>
 #else
 #include <GL/glut.h>
 #endif
@@ -33,20 +33,24 @@ public:
     bool getIsPlaying();
 
     int numberOfObjects;
-    GLfloat *listOfEulerAngle[3];
-    GLfloat *listOfPositions[3];
-    GLfloat *listOfVelocity[3];
-    GLfloat *listOfAngularVelo[3];
+    vector<GLfloat*> listOfEulerAngle;
+    vector<GLfloat*> listOfPositions;
+    vector<GLfloat*> listOfVelocity;
+    vector<GLfloat*> listOfAngularVelo;
+//    GLfloat **listOfEulerAngle;
+//    GLfloat **listOfPositions;
+//    GLfloat **listOfVelocity;
+//    GLfloat **listOfAngularVelo;
 
     void setNumberOfObjects(int i);
 
-    void addOneInitPosition(GLfloat *onePositions, int i);
+    void addOneInitPosition(GLfloat *onePositions);
 
-    void addOneInitOrientation(GLfloat *oneOrientation, int i);
+    void addOneInitOrientation(GLfloat *oneOrientation);
 
-    void addOneVelocity(GLfloat *oneVelocity, int i);
+    void addOneVelocity(GLfloat *oneVelocity);
 
-    void addOneAngularVelo(GLfloat *oneAngularVelo, int i);
+    void addOneAngularVelo(GLfloat *oneAngularVelo);
 };
 
 

@@ -10,9 +10,9 @@ const GLfloat Ball::GRAVITY[3] = {0, 9.8, 0};
 const GLfloat Ball::airFrictionFactor = 0.3; // airFriction is totally related to speed
 const GLfloat Ball::groundFrictionAcclrtn = 0.1; // groundFriction is totally related to mass
 
-Ball::Ball(int id, int listId, GLfloat mass, bool isFixed, GLfloat *orientation,
-           GLfloat *translation, GLfloat * velocity, GLfloat * angularVelocity) {
-    Object(id, listId, mass, isFixed, orientation, translation);
+Ball::Ball(int oId, int lId, GLfloat om, bool isF, GLfloat *orienttn,
+     GLfloat *translatn, GLfloat * velocity, GLfloat * angularVelocity)
+        :Object(oId, lId, om, isF, orienttn, translatn){ // call the base class constructor first
     int i;
     radius = 2;
     for (i = 0 ; i < 3; i++){
@@ -21,6 +21,7 @@ Ball::Ball(int id, int listId, GLfloat mass, bool isFixed, GLfloat *orientation,
         *(Ball::angluarVelo + i) = *(angularVelocity + i);
         *(angularAcclrtn + i) = 0;
     }
+    setUnitTravelDirection();
 }
 
 void Ball::changeAcceleration(GLfloat *acceleration) {

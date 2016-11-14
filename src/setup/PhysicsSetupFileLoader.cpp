@@ -14,7 +14,7 @@ using namespace std;
 void PhysicsSetupFileLoader::loadPreferencesFromTextFile(char *path, PhysicsPrefs *prefs) {
     FILE *setupFilePointer;
     GLfloat tempFloat[3] = {};
-    int numberOfObjects, pCounter = 0, eCounter = 0, vCounter = 0, aCounter = 0;
+    int numberOfObjects;
     char firstWord[16];
     setupFilePointer = fopen(path, "r");
     if (!setupFilePointer) {
@@ -38,17 +38,17 @@ void PhysicsSetupFileLoader::loadPreferencesFromTextFile(char *path, PhysicsPref
         }  else if (strcmp(firstWord, "p") == 0) {
             fscanf(setupFilePointer, "%f %f %f", &tempFloat[0], &tempFloat[1], &tempFloat[2]);
             // save positions in preferences
-            prefs->addOneInitPosition(tempFloat, pCounter++);
+            prefs->addOneInitPosition(tempFloat);
         } else if (strcmp(firstWord, "e") == 0) {
             fscanf(setupFilePointer, "%f %f %f", &tempFloat[0], &tempFloat[1], &tempFloat[2]);
             //save euler angle in preferences
-            prefs->addOneInitOrientation(tempFloat, eCounter++);
+            prefs->addOneInitOrientation(tempFloat);
         } else if(strcmp(firstWord, "v") == 0) {
             fscanf(setupFilePointer, "%f %f %f", &tempFloat[0], &tempFloat[1], &tempFloat[2]);
-            prefs->addOneVelocity(tempFloat, vCounter++);
+            prefs->addOneVelocity(tempFloat);
         }else if(strcmp(firstWord, "a") == 0) {
             fscanf(setupFilePointer, "%f %f %f", &tempFloat[0], &tempFloat[1], &tempFloat[2]);
-            prefs->addOneAngularVelo(tempFloat, aCounter++);
+            prefs->addOneAngularVelo(tempFloat);
         }
     }
     fclose(setupFilePointer);

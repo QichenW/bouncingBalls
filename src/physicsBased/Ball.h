@@ -17,8 +17,9 @@
 
 class Ball: public Object {
 public:
-    Ball(int id, int listId, GLfloat mass, bool isFixed, GLfloat *orientation,
-         GLfloat *translation, GLfloat * velocity, GLfloat * angularVelocity);
+
+    Ball(int oId, int lId, GLfloat om, bool isF, GLfloat *orienttn, GLfloat *translatn, GLfloat *velocity,
+             GLfloat *angularVelocity);
 
     void changeAcceleration(GLfloat *acceleration);
 
@@ -35,11 +36,11 @@ public:
     GLfloat getVelocityIn(const int direction);
 
 private:
-    GLfloat * velocity;
-    GLfloat * acceleration;
-    GLfloat * angluarVelo;
-    GLfloat * angularAcclrtn;
-    GLfloat * unitTravelDirection;
+    GLfloat velocity[3];
+    GLfloat acceleration[3];
+    GLfloat angluarVelo[3];
+    GLfloat angularAcclrtn[3];
+    GLfloat unitTravelDirection[3];
 
     static const GLfloat airFrictionFactor;
     static const GLfloat groundFrictionAcclrtn;

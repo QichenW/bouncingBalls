@@ -23,7 +23,7 @@ public:
 
     GLfloat *getFlattenedTransformationMatrix();
 
-    GLfloat *getTranslation() const;
+    GLfloat *getTranslation();
 
     GLuint getListId();
 
@@ -40,9 +40,9 @@ protected:
     static GLfloat BOTTOM_WALL_Y;
     GLuint listId;
     GLfloat mass;
-    GLfloat * orientation;  //3
-    GLfloat * translation;  //3
-    GLfloat * flattenedTransformationMatrix; //16
+    GLfloat orientation[3]={};  //3
+    GLfloat translation[3]={};  //3
+    GLfloat flattenedTransformationMatrix[16]={}; //16
 
 };
 

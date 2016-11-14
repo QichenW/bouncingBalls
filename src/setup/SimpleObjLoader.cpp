@@ -20,10 +20,10 @@ vector<GLfloat> vx, vy,vz;
  * @param fileName
  * @return identifier of the object
  */
-GLuint SimpleObjLoader::loadObj(char *fileName, int objNo, float scale) {
+GLuint SimpleObjLoader::loadObj(char *fileName, GLuint objNo, float scale, bool isQuad, bool hasVt, bool hasVn) {
 
     GLfloat x, y, z;
-    GLuint object =objNo;
+    GLuint object;
     object = glGenLists(objNo);
     filePointer = fopen(fileName, "r");
     if (!filePointer) {
@@ -50,11 +50,20 @@ GLuint SimpleObjLoader::loadObj(char *fileName, int objNo, float scale) {
     glNewList(object, GL_COMPILE);
         glLineWidth(1.0);
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        // record the polygons of an object1 in a
-        //if is a file without only vt, like in elephant.obj
-        //recordObjectAsTrianglesWithNoVt();
-        //if is a file without vt and vn, like in teddy.obj
-        recordObjectAsTrianglesWithNoVtNoVn();
+        // obj files may contain all vectors for rendering or part of them, read them depending on the bool parameters
+        if(isQuad) {
+            if(hasVt && hasVn) {
+                recordObjectAsQuads();
+            } else {
+                recordObjectAsQuadsWithNoVtNoVn();
+            }
+        } else {
+            if (hasVn){
+                recordObjectAsTrianglesWithNoVt();
+            } else{
+                recordObjectAsTrianglesWithNoVtNoVn();
+            }
+        }
         vx.clear();
         vy.clear();
         vz.clear();
@@ -107,6 +116,56 @@ void SimpleObjLoader::recordObjectAsTrianglesWithNoVtNoVn() {
             glVertex3f(vx.at(vIndex1 - 1), vy.at(vIndex1 - 1), vz.at(vIndex1 - 1));
             glVertex3f(vx.at(vIndex2 - 1), vy.at(vIndex2 - 1), vz.at(vIndex2 - 1));
             glVertex3f(vx.at(vIndex3 - 1), vy.at(vIndex3 - 1), vz.at(vIndex3 - 1));
+        }
+    }
+    glEnd();
+}
+
+/****
+ * This function can load a obj file in quadrilaterals
+ */
+void SimpleObjLoader::recordObjectAsQuads() {
+    char dump1, dump2;
+    unsigned long vIndex1, vIndex2, vIndex3, vIndex4, vtIndex, vnIndex;
+    glBegin(GL_QUADS);
+    while (true) {
+        // %s ignores /r /0 /n in between lines
+        if (fscanf(filePointer, "%s", firstWord) == EOF) {
+            break;
+        }
+        if (strcmp(firstWord, "f") == 0) {
+
+            fscanf(filePointer, "%lu %c %lu %c %lu", &vIndex1, &dump1, &vtIndex, &dump2, &vnIndex);
+            fscanf(filePointer, "%lu %c %lu %c %lu", &vIndex2, &dump1, &vtIndex, &dump2, &vnIndex);
+            fscanf(filePointer, "%lu %c %lu %c %lu", &vIndex3, &dump1, &vtIndex, &dump2, &vnIndex);
+            fscanf(filePointer, "%lu %c %lu %c %lu", &vIndex4, &dump1, &vtIndex, &dump2, &vnIndex);
+            glVertex3f(vx.at(vIndex1 - 1), vy.at(vIndex1 - 1), vz.at(vIndex1 - 1));
+            glVertex3f(vx.at(vIndex2 - 1), vy.at(vIndex2 - 1), vz.at(vIndex2 - 1));
+            glVertex3f(vx.at(vIndex3 - 1), vy.at(vIndex3 - 1), vz.at(vIndex3 - 1));
+            glVertex3f(vx.at(vIndex4 - 1), vy.at(vIndex4 - 1), vz.at(vIndex4 - 1));
+        }
+    }
+    glEnd();
+}
+
+/****
+ * This function can load a obj file with no texture vector, no normal vector and describing the object in triangles
+ */
+void SimpleObjLoader::recordObjectAsQuadsWithNoVtNoVn() {
+    unsigned long vIndex1, vIndex2, vIndex3, vIndex4;
+    glBegin(GL_QUADS);
+    while (true) {
+        // %s ignores /r /0 /n in between lines
+        if (fscanf(filePointer, "%s", firstWord) == EOF) {
+            break;
+        }
+        if (strcmp(firstWord, "f") == 0) {
+
+            fscanf(filePointer, "%lu %lu %lu %lu", &vIndex1, &vIndex2, &vIndex3, &vIndex4);
+            glVertex3f(vx.at(vIndex1 - 1), vy.at(vIndex1 - 1), vz.at(vIndex1 - 1));
+            glVertex3f(vx.at(vIndex2 - 1), vy.at(vIndex2 - 1), vz.at(vIndex2 - 1));
+            glVertex3f(vx.at(vIndex3 - 1), vy.at(vIndex3 - 1), vz.at(vIndex3 - 1));
+            glVertex3f(vx.at(vIndex4 - 1), vy.at(vIndex4 - 1), vz.at(vIndex4 - 1));
         }
     }
     glEnd();
