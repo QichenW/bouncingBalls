@@ -122,10 +122,8 @@ void display(void) {
     glClearColor(0.0, 0.0, 0.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-//    // the setup info char * on the bottom left corner on window when it is idle,
-//    // or the type of animation when playing animation
-//    UserInterfaceManager::renderStatusMessage(
-//            prefs.getOrientationMode(), prefs.getInterpolationMode(), prefs.getIsPlaying());
+    UserInterfaceManager::printMessageForBouncingBalls(
+            prefs.numberOfObjects, DrawObjects::NUMBER_OF_WALLS, prefs.getIsPlaying());
 //    if(!prefs.getIsPlaying()){
 //        // if there is no user input, show an walking in straight line animation
 //        displayObject();

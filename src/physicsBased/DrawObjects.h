@@ -23,6 +23,8 @@ public:
     static void draw(Object **objects);
 
     static int numberOfObjects;
+    
+    static const int NUMBER_OF_WALLS;
 
 
     static void prepareObjects(PhysicsPrefs *pPrefs, Object **pObjects);
@@ -31,7 +33,6 @@ private:
     static const char* BALL_OBJ_NAME;
 
     static const char *WALL_OBJ_NAME;
-    static const int NUMBER_OF_WALLS;
 };
 
 

@@ -14,12 +14,14 @@
 
 class UserInterfaceManager {
 public:
-    static void renderStatusMessage(int orientationMode, int interpolationMode, bool isPlaying);
+    static void printMessageForBouncingBalls(int numberOfObjs, int numberOfWalls, bool isPlaying);
 
 private:
-    static char* buildString(const char **pointer, int numberOfSegments);
+    static char* buildString(int nb, int nw, const char **pointer, int numberOfSegments);
 
     static void printInWindow(char *strInfo, bool isStatusInfo);
+
+    static char *buildString(const char **pointer, int numberOfSegments);
 };
 
 
