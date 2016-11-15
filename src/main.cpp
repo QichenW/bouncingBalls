@@ -40,19 +40,14 @@ void displayObject() {
     glColor3f(0.1, 0.45, 0.1);
     glMatrixMode(GL_MODELVIEW);
     //move the model view away from the camera, so that we are not inside the object1
-    glMultMatrixf((GLfloat []){1,0,0,0,0,1,0,0,0,0,1,0,0,10,-20,1});
+    glMultMatrixf((GLfloat []){1,0,0,0,0,1,0,0,0,0,1,0,0,0,-150,1});
 
-//    //TODO insert real local rotation and translation
-//    //only the local translation of torso change
-//    Kinematics::setLocalTranslation(parts[0]);
-//    Kinematics::setLocalRotation(parts, false);
-//
-//    DrawLinks::drawLinks(parts, quaternion, translation, false);
-}
-
-
-void drawLiks(bool isKeyFraming) {
-
+    //TODO insert real local rotation and translation
+    if(objects[0]!= nullptr) {
+       //TODO fix this, move prepareObjects from user input helper to somewhere else
+        DrawObjects::prepareObjects(&prefs,objects);
+        DrawObjects::draw(objects);
+    }
 }
 
 /****
@@ -124,16 +119,13 @@ void display(void) {
 
     UserInterfaceManager::printMessageForBouncingBalls(
             prefs.numberOfObjects, DrawObjects::NUMBER_OF_WALLS, prefs.getIsPlaying());
-//    if(!prefs.getIsPlaying()){
-//        // if there is no user input, show an walking in straight line animation
-//        displayObject();
-//        //TODO the following two line is bad practice fix it later
-//        currentSegment = 1;
-//        prefs.currentCoefficientMatrices = prefs.pCoefficientMatrices;
-//    } else {
-//        curveSegmentAmount = prefs.getKeyFrameAmount() - 3;
-//        drawFrame();
-//    }
+    if(!prefs.getIsPlaying()){
+        // if there is no user input, show an walking in straight line animation
+        displayObject();
+    } else {
+//tODO
+        displayObject();
+    }
     glutSwapBuffers(); //swap the buffers
 
 }
