@@ -33,12 +33,14 @@ void DrawObjects::draw(Object **objects) {
  */
 void DrawObjects::prepareObjects(PhysicsPrefs *pPrefs, Object **pObjects) {
     DrawObjects::numberOfObjects = pPrefs->numberOfObjects;
-    int i,j;
+    unsigned long i;
+    int j,k;
+    GLfloat scale = 3.0;
     vector<GLfloat *> orientations, positions, velocities, angularVelos;
 
     GLuint wallObjID = SimpleObjLoader::loadObj((char *) WALL_OBJ_NAME, 1, 1.0, true, false, false);
 
-    GLuint ballObjID = SimpleObjLoader::loadObj((char *) BALL_OBJ_NAME, 2, 1.0, true, true, true);
+    GLuint ballObjID = SimpleObjLoader::loadObj((char *) BALL_OBJ_NAME, 2, scale, true, true, true);
 
     orientations = pPrefs->listOfEulerAngle;
     positions = pPrefs->listOfPositions;
@@ -57,12 +59,13 @@ void DrawObjects::prepareObjects(PhysicsPrefs *pPrefs, Object **pObjects) {
         cout<<"\n";
     }
 
-    for (i = 0; i < numberOfObjects; i++){
-        if(i < NUMBER_OF_WALLS){
-            *(pObjects + i) = new Object(i,wallObjID, 0, true, orientations.at(i), positions.at(i));
+    for (k = 0; k < numberOfObjects; k++){
+        if(k < NUMBER_OF_WALLS){
+            *(pObjects + k) = new Object(k,wallObjID, 0, true, orientations.at(k), positions.at(k));
         } else {
-            *(pObjects + i) = new Ball(i,ballObjID, 1, false, orientations.at(i), positions.at(i),
-                                      velocities .at(i - NUMBER_OF_WALLS), angularVelos.at(i- NUMBER_OF_WALLS));
+            *(pObjects + k) = new Ball(k, ballObjID, 1, false, orientations.at(k), positions.at(k),
+                                       velocities .at(k - NUMBER_OF_WALLS), angularVelos.at(k- NUMBER_OF_WALLS),
+                                       (GLfloat) (2.4 * scale)); //the radius of the ball in .obj file is 2.4
         }
     }
 

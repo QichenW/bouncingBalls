@@ -7,6 +7,7 @@
 #include "Object.h"
 #include "Geometry.h"
 #include "matrix/RotationHelper.h"
+#include <cstdlib>
 #if defined(__APPLE__)
 #include <GLUT/glut.h>
 
@@ -19,7 +20,8 @@ class Ball: public Object {
 public:
 
     Ball(int oId, int lId, GLfloat om, bool isF, GLfloat *orienttn, GLfloat *translatn, GLfloat *velocity,
-             GLfloat *angularVelocity);
+             GLfloat *angularVelocity, GLfloat r);
+
 
     void changeAcceleration(GLfloat *acceleration);
 
@@ -27,16 +29,16 @@ public:
 
     void updateAcclrtn();
 
-    void updateFlattenedTransformationMatrix();
+    void updateFlattenedTransformationMatrix(GLfloat t);
 
     GLfloat radius;
 
-    void reverseVelocity(const int direction, GLfloat ratio);
+    void reverseVelocity(GLfloat * veloInOneDirection);
 
     GLfloat getVelocityIn(const int direction);
-
-private:
     GLfloat velocity[3];
+private:
+
     GLfloat acceleration[3];
     GLfloat angluarVelo[3];
     GLfloat angularAcclrtn[3];
@@ -51,6 +53,7 @@ private:
 
 
     void setUnitTravelDirection();
+
 };
 
 

@@ -4,6 +4,7 @@
 //  Copyright © 2016 Qichen Wang. All rights reserved.
 //
 
+#include "physicsBased/CollisionDetector.h"
 #include "RotationHelper.h"
 #include "UserInputManager.h"
 #include "StringUtils.h"
@@ -15,10 +16,7 @@ using namespace std;
 
 Object *objects[7];
 PhysicsPrefs prefs;
-int curveSegmentAmount, currentSegment;
-GLfloat increment = 0.008;
-
-GLfloat tVector[4]={}, quaternion[4] = {}, eulerAngle[3] = {}, translation[3] = {};
+GLfloat t = 0, increment = 0.08;
 int window;
 
 void drawFrame();
@@ -44,8 +42,7 @@ void displayObject() {
 
     //TODO insert real local rotation and translation
     if(objects[0]!= nullptr) {
-       //TODO fix this, move prepareObjects from user input helper to somewhere else
-        DrawObjects::prepareObjects(&prefs,objects);
+
         DrawObjects::draw(objects);
     }
 }
@@ -54,63 +51,19 @@ void displayObject() {
  * This function is for drawing the frames in the interpolated animation.
  */
 void drawFrame() {
-//    glLoadIdentity();
-//    glPushMatrix();
-//    //move the model view away from the camera, so that we are not inside the object
-//    glMultMatrixf((GLfloat []){1,0,0,0,0,1,0,0,0,0,1,0,0,10,-95,1});
-//    glColor3f(0.1, 0.45, 0.1);
-//
-//    // prepare the T vector for current time, then increment time.
-//    // if reach the end of one curve segment, point to next segment/ if end of whole trajectory, stop the animation
-//    // then return
-//
-//    if(prefs.getTimeProgress()< 1.0){
-//        InterpolationHelper::prepareTimeVector(tVector, prefs.getTimeProgress());
-//        prefs.timeProceed(increment);
-//    } else if (currentSegment <= curveSegmentAmount) {
-//        //if reach the end of current curve
-//        prefs.currentCoefficientMatrices->printCurrentCoefficientMatrices();
-//        if (currentSegment == curveSegmentAmount) {
-//            // if current curve is the last segment in trajectory, end the animation then return
-//            glPopMatrix();
-//            prefs.setIsPlaying(false);
-//            return;
-//        }
-//        // if current cure is not the last segment in trajectory, shift to next curve then return
-//        currentSegment++;
-//        prefs.resetTimeProgress();
-//        prefs.currentCoefficientMatrices = prefs.currentCoefficientMatrices->next;
-//        // move and rotate the figure
-//        Kinematics::setLocalRotation(parts, true);
-//        DrawLinks::drawLinks(parts, quaternion, translation, true);
-//        glPopMatrix();
-//        return;
-//    }
-//
-//    /** the interpolation for rotation of links other that torso is NOT written here,
-//     * it is written in class Kinematics **/
-//
-//    // prepare the translation vector for torso
-//    InterpolationHelper::
-//    prepareTranslationOrEulerAngleVector(translation, tVector, prefs.currentCoefficientMatrices->translation);
-//
-//    if (prefs.getOrientationMode() == 0) {
-//        // if getting euler angle version of animation
-//        // prepare the euler angle vector for torso
-//        InterpolationHelper::
-//        prepareTranslationOrEulerAngleVector(eulerAngle, tVector, prefs.currentCoefficientMatrices->eRotation);
-//        // move the figure
-//        glMultMatrixf(RotationHelper::generateFlattenedTransformationMatrix(eulerAngle, translation, false));
-//    } else {
-//        // if getting quaternion version of animation
-//        // prepare the quaternion vector
-//        InterpolationHelper::prepareQuaternionVector(quaternion, tVector, prefs.currentCoefficientMatrices->qRotation);
-//
-//        // move and rotate the torso; rotate other links
-//        Kinematics::setLocalRotation(parts, true);
-//        DrawLinks::drawLinks(parts, quaternion, translation, true);
-//    }
-//    glPopMatrix();
+    glLoadIdentity();
+    glPushMatrix();
+    //move the model view away from the camera, so that we are not inside the object
+    glMultMatrixf((GLfloat []){1,0,0,0,0,1,0,0,0,0,1,0,0,0,-150,1});
+    glColor3f(0.1, 0.45, 0.1);
+    int i;
+    CollisionDetector::detectAll(objects, prefs.numberOfObjects);
+    for(i = 6; i <prefs.numberOfObjects; i++){
+        ((Ball *) objects[i])->updateFlattenedTransformationMatrix(increment);
+    }
+    DrawObjects::draw(objects);
+
+    glPopMatrix();
 }
 
 void display(void) {
@@ -124,7 +77,7 @@ void display(void) {
         displayObject();
     } else {
 //tODO
-        displayObject();
+        drawFrame();
     }
     glutSwapBuffers(); //swap the buffers
 
@@ -150,6 +103,8 @@ int main(int argc, char **argv) {
     UserInputManager(&window, &prefs, objects);
 
     UserInputManager::createMouseMenu();
+    //TODO fix this, this function is also called in userInputManager
+    DrawObjects::prepareObjects(&prefs,objects);
     glutMainLoop();
     return 0;
 }

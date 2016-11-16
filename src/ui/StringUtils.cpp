@@ -39,7 +39,7 @@ void UserInterfaceManager::printInWindow(char *strInfo, bool isStatusInfo) {
         x = 20;
         y = 20;
     } else {
-        x = 540;
+        x = 20;
         y = 100;
     }
 //set the text position in the window and color
