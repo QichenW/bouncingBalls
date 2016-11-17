@@ -5,18 +5,14 @@
 //
 
 #include "physicsBased/CollisionDetector.h"
-#include "RotationHelper.h"
 #include "UserInputManager.h"
 #include "StringUtils.h"
-#include "matrix/InterpolationHelper.h"
-#include "physicsBased/Object.h"
-#include "physicsBased/DrawObjects.h"
 
 using namespace std;
 
 Object *objects[50];
 PhysicsPrefs prefs;
-GLfloat t = 0, increment = 0.05;
+GLfloat increment = 0.05;
 int window;
 
 void drawFrame();

@@ -2,11 +2,7 @@
 // Created by Qichen on 9/24/16.
 //
 
-#include <iostream>
 #include "PhysicsPrefs.h"
-#include "InterpolationHelper.h"
-#include "QuaternionConverter.h"
-
 
 /****
  * This class contains the setup for the animation.

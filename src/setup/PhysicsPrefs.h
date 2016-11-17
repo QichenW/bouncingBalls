@@ -4,7 +4,7 @@
 
 #ifndef BOUNCINGBALLS_PHYSICSPREFS_H
 #define BOUNCINGBALLS_PHYSICSPREFS_H
-
+#include <iostream>
 #if defined(__APPLE__)
 #include <GLUT/glut.h>
 #include <string>
@@ -37,10 +37,6 @@ public:
     vector<GLfloat*> listOfPositions;
     vector<GLfloat*> listOfVelocity;
     vector<GLfloat*> listOfAngularVelo;
-//    GLfloat **listOfEulerAngle;
-//    GLfloat **listOfPositions;
-//    GLfloat **listOfVelocity;
-//    GLfloat **listOfAngularVelo;
 
     void setNumberOfObjects(int i);
 

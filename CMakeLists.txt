@@ -5,9 +5,14 @@ add_subdirectory(nfd)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-set(SOURCE_FILES src/main.cpp src/setup/SimpleObjLoader.cpp src/setup/SimpleObjLoader.h src/matrix/RotationHelper.cpp
-        src/matrix/RotationHelper.h src/ui/UserInputManager.cpp src/ui/UserInputManager.h
-        src/ui/StringUtils.cpp src/ui/StringUtils.h src/setup/PhysicsPrefs.cpp src/setup/PhysicsPrefs.h src/setup/PhysicsSetupFileLoader.cpp src/setup/PhysicsSetupFileLoader.h src/matrix/InterpolationHelper.cpp src/matrix/InterpolationHelper.h src/matrix/QuaternionConverter.cpp src/matrix/QuaternionConverter.h src/articulated/Part.cpp src/articulated/Part.h src/matrix/CoefficientMatrices.cpp src/matrix/CoefficientMatrices.h src/articulated/DrawLinks.cpp src/articulated/DrawLinks.h src/articulated/Kinematics.cpp src/articulated/Kinematics.h src/physicsBased/Object.cpp src/physicsBased/Object.h src/physicsBased/Ball.cpp src/physicsBased/Ball.h src/physicsBased/DrawObjects.cpp src/physicsBased/DrawObjects.h src/physicsBased/CollisionDetector.cpp src/physicsBased/CollisionDetector.h src/physicsBased/Geometry.cpp src/physicsBased/Geometry.h)
+set(SOURCE_FILES src/main.cpp src/setup/SimpleObjLoader.cpp src/setup/SimpleObjLoader.h
+        src/ui/UserInputManager.cpp src/ui/UserInputManager.h src/ui/StringUtils.cpp src/ui/StringUtils.h
+        src/setup/PhysicsPrefs.cpp src/setup/PhysicsPrefs.h src/setup/PhysicsSetupFileLoader.cpp
+        src/setup/PhysicsSetupFileLoader.h src/physicsBased/Object.cpp src/physicsBased/Object.h
+        src/physicsBased/Ball.cpp src/physicsBased/Ball.h src/physicsBased/DrawObjects.cpp
+        src/matrix/RotationHelper.cpp src/matrix/RotationHelper.h src/physicsBased/DrawObjects.h
+        src/physicsBased/CollisionDetector.cpp src/physicsBased/CollisionDetector.h
+        src/physicsBased/Geometry.cpp src/physicsBased/Geometry.h)
 
 #########################################################
 # Include Files

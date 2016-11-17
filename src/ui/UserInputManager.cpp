@@ -50,48 +50,6 @@ void UserInputManager::setMouseMenuBehavior(int id){
     }
 }
 
-/** sub-menus not implemented for now **/
-//void UserInputManager::orientationMenu(int id){
-//    //Foolproof, do not respond if the status message does not suggest you to choose
-//    if((*prefsPointer).areBothOptionSelected()){
-//        return;
-//    }
-//    glNewList (++indexOfMenuInList, GL_COMPILE_AND_EXECUTE);
-//    switch (id) {
-//        case 1 :
-//            (*prefsPointer).setOrientationMode(EULER_ANGLE_MODE);
-//            break;
-//        case 2 :
-//            (*prefsPointer).setOrientationMode(QUATERNION_MODE);
-//            break;
-//
-//        default : /* for any case not covered above, leave color unchanged */
-//            break;
-//    }
-//    glEndList ();
-//    pointsChosen = 0;
-//}
-//
-//void UserInputManager::inbetweeningMenu(int id) {
-//    //Foolproof, do not respond if the status message does not suggest you to choose
-//    if((*prefsPointer).areBothOptionSelected()){
-//        return;
-//    }
-//    glNewList (++indexOfMenuInList, GL_COMPILE_AND_EXECUTE);
-//    switch (id)
-//    {
-//        case 1 :
-//            (*prefsPointer).setInterpolationMode(CATMULL_ROM_MODE);
-//            break;
-//        case 2 :
-//            (*prefsPointer).setInterpolationMode(B_SPLINE_MODE);
-//            break;
-//        default :
-//            break;
-//    }
-//    glEndList ();
-//}
-
 /****
  * the callback function for mouse event, not yet populated
  */
