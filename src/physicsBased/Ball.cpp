@@ -7,8 +7,8 @@ const int Ball::X_DIRECTION = 0;
 const int Ball::Y_DIRECTION = 1;
 const int Ball::Z_DIRECTION = 2;
 const GLfloat Ball::GRAVITY[3] = {0, -9.8, 0};
-const GLfloat Ball::airFrictionFactor = 0.3; // airFriction is totally related to speed
-const GLfloat Ball::groundFrictionAcclrtn = 0.1; // groundFriction is totally related to mass
+const GLfloat Ball::THRESHOLD = 0.5; // when slower that this, stop
+const GLfloat Ball::FRICTION = -0.8; // groundFriction is totally related to mass
 
 Ball::Ball(int oId, int lId, GLfloat om, bool isF, GLfloat *orienttn,
      GLfloat *translatn, GLfloat * velocity, GLfloat * angularVelocity, GLfloat r)
@@ -20,6 +20,7 @@ Ball::Ball(int oId, int lId, GLfloat om, bool isF, GLfloat *orienttn,
         *(Ball::velocity + i) = *(velocity + i);
         *(Ball::angluarVelo + i) = *(angularVelocity + i);
         *(angularAcclrtn + i) = 0;
+        *(directionOfCollision + i) = 0;
     }
     setUnitTravelDirection();
 }
@@ -39,6 +40,7 @@ void Ball::changeAngluarAcclrtn(GLfloat *angularAcclrtn) {
 }
 
 void Ball::updateFlattenedTransformationMatrix(GLfloat t) {
+    setUnitTravelDirection();
     updateAcclrtn();
     int i;
     for (i = 0 ; i < 3; i++){
@@ -97,14 +99,32 @@ void Ball::setUnitTravelDirection() {
 }
 
 void Ball::updateAcclrtn() {
-    // TODO add air friction using unit travel direction
-
-    // if rolling on the bottom wall, there is ground friction
+    // if rolling on the bottom wall, there is no acceleration in y direction
  if(*(translation + 1) <= BOTTOM_WALL_Y + radius){
      *(acceleration + 1) = 0; // rolling on the ground
     //TODO add ground friction using unit travel direction
+     *acceleration = unitTravelDirection[0] * FRICTION;
+     *(acceleration + 2) = unitTravelDirection[2] * FRICTION;
  } else {
      *(acceleration + 1) = *(GRAVITY + 1);
+     *acceleration = 0;
+     *(acceleration + 2) = 0;
  }
+}
+
+/***
+ * If the ball is moving slowly on floor,stop it
+ */
+void Ball::forceStopIfSlowOnFloor() {
+    if(*(translation + 1) <= BOTTOM_WALL_Y + radius){
+        if (sqrtf(powf(*velocity,2) + powf(*(velocity + 1),2) + powf(*(velocity + 2),2)) < THRESHOLD){
+            int i;
+            for(i = 0; i < 3; i++){
+                *(velocity + i) = 0;
+                *(angluarVelo + i) = 0;
+                *(acceleration + i) = 0;
+            }
+        }
+    }
 }
 

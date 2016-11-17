@@ -37,15 +37,20 @@ public:
 
     GLfloat getVelocityIn(const int direction);
     GLfloat velocity[3];
+    GLfloat directionOfCollision[3];
+    GLfloat angluarVelo[3];
+
+    void forceStopIfSlowOnFloor();
+
 private:
 
     GLfloat acceleration[3];
-    GLfloat angluarVelo[3];
     GLfloat angularAcclrtn[3];
+    //TODO this is not useful
     GLfloat unitTravelDirection[3];
 
-    static const GLfloat airFrictionFactor;
-    static const GLfloat groundFrictionAcclrtn;
+    static const GLfloat THRESHOLD;
+    static const GLfloat FRICTION;
     static const GLfloat GRAVITY[3];
     static const int X_DIRECTION;
     static const int Y_DIRECTION;

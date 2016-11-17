@@ -35,11 +35,11 @@ public:
 
 
     bool isFixed;
+    GLfloat mass;
 protected:
     int id;
     static GLfloat BOTTOM_WALL_Y;
     GLuint listId;
-    GLfloat mass;
     GLfloat orientation[3]={};  //3
     GLfloat translation[3]={};  //3
     GLfloat flattenedTransformationMatrix[16]={}; //16

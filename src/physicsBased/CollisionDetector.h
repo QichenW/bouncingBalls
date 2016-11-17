@@ -11,6 +11,7 @@
 #include "matrix/RotationHelper.h"
 #include "Geometry.h"
 #include <cmath>
+#include <iostream>
 #if defined(__APPLE__)
 #include <GLUT/glut.h>
 
@@ -18,7 +19,7 @@
 #else
 #include <GL/glut.h>
 #endif
-
+using namespace std;
 class CollisionDetector {
 public:
     static void detectAll(Object **all, int numberOfObjects);
@@ -28,6 +29,10 @@ public:
     static const int Y_DIRECTION;
     static const int Z_DIRECTION;
     static const GLfloat ratio;
+
+    static void applyConservationLawForVelos(Ball *b1, Ball *b2);
+
+    static void fakeTheRotation(Ball *ball, int hitInTheDirectionOfWhichAxe);
 };
 
 

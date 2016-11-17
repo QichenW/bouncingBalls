@@ -17,6 +17,7 @@ GLfloat Geometry::getDistance(GLfloat *pos1, GLfloat *pos2) {
 }
 
 /***
+ * used for getting acceleration caused by friction on groud
  * get the unit vector for a vector; if the vector is {0,0,0}, the unity vector is also {0,0,0}
  */
 void Geometry::getUnitDirection(GLfloat *des, GLfloat *src) {
@@ -28,6 +29,39 @@ void Geometry::getUnitDirection(GLfloat *des, GLfloat *src) {
         for (i = 0; i < 3; i++){
             *(des + i) = *(src + i)/ magnitude;
         }
+    }
+}
+
+/****
+ * get the direction of collision between balls
+ * @param d1  where to store the result
+ * @param d2  where to store the result
+ * @param cSelf centroid of one ball
+ * @param cOther  centroid of another ball
+ */
+void Geometry::getDirectionOfCollision(GLfloat *d1,GLfloat *d2, GLfloat *cSelf, GLfloat *cOther) {
+    int i;
+    for (i = 0; i < 3; i++) {
+        *(d1 + i) = *(cOther + i) - *(cSelf + i);
+        *(d2 + i) = *(d1 + i);
+    }
+
+}
+
+/****
+ * Get the portion of velocity to change in a collision(projection of the velocity to the vector connecting the
+ * entroid of two balls)
+ * @param des where the result is stored
+ * @param from - the velocity vector
+ * @param to - the vector connecting two balls
+ */
+void Geometry::getProjection(GLfloat *des, GLfloat *from,GLfloat *to) {
+//TODo test this
+    GLfloat magnitudeOfTo = sqrtf(powf(to[0],2) + powf(to[1],2) + powf(to[2],2));
+    GLfloat temp = (from[0] * to[0] + from[1] * to[1] + from[2] * to[2])/powf(magnitudeOfTo,2);
+    int i;
+    for ( i = 0; i < 3; i++){
+        *(des + i) = temp *  *(to + i);
     }
 }
 
