@@ -14,7 +14,7 @@
 
 using namespace std;
 
-Object *objects[7];
+Object *objects[50];
 PhysicsPrefs prefs;
 GLfloat t = 0, increment = 0.08;
 int window;

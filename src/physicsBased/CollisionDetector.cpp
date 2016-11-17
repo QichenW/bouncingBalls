@@ -18,41 +18,41 @@ const GLfloat CollisionDetector::ratio = 0.8;
  */
 void CollisionDetector::detectAll(Object **all, int numberOfObjects) {
     int i,j;
-    Ball * b;
+    Ball * b1, * b2;
     for(i = NUMBER_OF_WALLS; i < numberOfObjects; i++){
-        b = (Ball *) all[i];
-        for (j = 0; j < numberOfObjects; j++){
+        b1 = (Ball *) all[i];
+        for (j = 0; j < i; j++){
             //detecting if collision with a wall
             if (all[j]->isFixed){
                 switch (j) {
                     case 0:
-                        if(all[j]->getX() - b->getX() <= b->radius && b->getVelocityIn(X_DIRECTION) > 0){
-                            b->reverseVelocity(b->velocity);
+                        if(all[j]->getX() - b1->getX() <= b1->radius && b1->getVelocityIn(X_DIRECTION) > 0){
+                            b1->reverseVelocity(b1->velocity);
                         }
                         break;
                     case 1:
-                        if(b->getX() - all[j]->getX() <= b->radius && b->getVelocityIn(X_DIRECTION) < 0){
-                            b->reverseVelocity(b->velocity);
+                        if(b1->getX() - all[j]->getX() <= b1->radius && b1->getVelocityIn(X_DIRECTION) < 0){
+                            b1->reverseVelocity(b1->velocity);
                         }
                         break;
                     case 2:
-                        if(all[j]->getY() - b->getY() <= b->radius && b->getVelocityIn(Y_DIRECTION) > 0){
-                            b->reverseVelocity(b->velocity+1);
+                        if(all[j]->getY() - b1->getY() <= b1->radius && b1->getVelocityIn(Y_DIRECTION) > 0){
+                            b1->reverseVelocity(b1->velocity+1);
                         }
                         break;
                     case 3:
-                        if(b->getY() - all[j]->getY() <= b->radius && b->getVelocityIn(Y_DIRECTION) < 0){
-                            b->reverseVelocity(b->velocity+1);
+                        if(b1->getY() - all[j]->getY() <= b1->radius && b1->getVelocityIn(Y_DIRECTION) < 0){
+                            b1->reverseVelocity(b1->velocity+1);
                         }
                         break;
                     case 4:
-                        if(all[j]->getZ() - b->getZ() <= b->radius && b->getVelocityIn(Z_DIRECTION) > 0){
-                            b->reverseVelocity(b->velocity+2);
+                        if(all[j]->getZ() - b1->getZ() <= b1->radius && b1->getVelocityIn(Z_DIRECTION) > 0){
+                            b1->reverseVelocity(b1->velocity+2);
                         }
                         break;
                     case 5:
-                        if(b->getZ() - all[j]->getZ() <= b->radius && b->getVelocityIn(Z_DIRECTION) < 0){
-                            b->reverseVelocity(b->velocity+2);
+                        if(b1->getZ() - all[j]->getZ() <= b1->radius && b1->getVelocityIn(Z_DIRECTION) < 0){
+                            b1->reverseVelocity(b1->velocity+2);
                         }
                         break;
                     default:
@@ -60,8 +60,12 @@ void CollisionDetector::detectAll(Object **all, int numberOfObjects) {
                 }
 
             } else{ //detecting if collision with another ball
-                if(Geometry::getDistance(b->getTranslation(), all[j]->getTranslation())
-                        < b->radius +  ((Ball *) all[j])->radius) {
+                if(i == j) {
+                    continue;
+                }
+                b2 = ((Ball *) all[j]);
+                if(Geometry::getDistance(b1->getTranslation(), b2->getTranslation())
+                        < b1->radius +  b2->radius) {
                     //TODO fix this
 
                 }
