@@ -14,7 +14,9 @@ using namespace std;
 void PhysicsSetupFileLoader::loadPreferencesFromTextFile(char *path, PhysicsPrefs *prefs) {
     FILE *setupFilePointer;
     GLfloat tempFloat[3] = {};
-    int numberOfObjects;
+    GLfloat tempMass = 0;
+    int numberOfWalls = 6;
+    int numberOfObjects = 6;
     char firstWord[16];
     setupFilePointer = fopen(path, "r");
     if (!setupFilePointer) {
@@ -49,6 +51,13 @@ void PhysicsSetupFileLoader::loadPreferencesFromTextFile(char *path, PhysicsPref
         }else if(strcmp(firstWord, "a") == 0) {
             fscanf(setupFilePointer, "%f %f %f", &tempFloat[0], &tempFloat[1], &tempFloat[2]);
             prefs->addOneAngularVelo(tempFloat);
+        } else if (strcmp(firstWord, "m") == 0){
+            int count;
+            for(count = 0; count < numberOfObjects - numberOfWalls; count++){
+                fscanf(setupFilePointer, "%f", &tempMass);
+                prefs->addOneBallMass(tempMass);
+            }
+
         }
     }
     fclose(setupFilePointer);

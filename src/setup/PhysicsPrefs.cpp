@@ -102,3 +102,7 @@ void PhysicsPrefs::addOneAngularVelo(GLfloat *oneAngularVelo) {
     }
     listOfAngularVelo.push_back(av);
 }
+
+void PhysicsPrefs::addOneBallMass(GLfloat m) {
+    listOfMass.push_back(m);
+}

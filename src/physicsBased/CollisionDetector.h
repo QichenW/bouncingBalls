@@ -33,6 +33,8 @@ public:
     static void applyConservationLawForVelos(Ball *b1, Ball *b2);
 
     static void fakeTheRotation(Ball *ball, int hitInTheDirectionOfWhichAxe);
+
+    static void reverseVelocity(GLfloat *veloInOneDirection);
 };
 
 

@@ -33,8 +33,6 @@ public:
 
     GLfloat radius;
 
-    void reverseVelocity(GLfloat * veloInOneDirection);
-
     GLfloat getVelocityIn(const int direction);
     GLfloat velocity[3];
     GLfloat directionOfCollision[3];

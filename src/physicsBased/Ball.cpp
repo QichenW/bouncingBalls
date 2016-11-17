@@ -56,27 +56,6 @@ void Ball::updateFlattenedTransformationMatrix(GLfloat t) {
 }
 
 /**
- * reverse the velocity when there is a collsion.
- * r is set arbitarily to let bouncing stop at some point in time
- * Reverse the ball's velocity in one direction due to collision with walls
- * @param i identifies which direction
- * @param ratio the amount of velocity presists
- */
-void Ball::reverseVelocity(GLfloat * veloInOneDirection) {
-    GLfloat r;
-    if(fabs(*veloInOneDirection) > 30){
-        r = 0.9;
-    }else if(fabs(*veloInOneDirection) > 14){
-        r = 0.7;
-    } else if(fabs(*veloInOneDirection) > 4){
-        r = 0.5;
-    } else {
-        r = 0;
-    }
-    *veloInOneDirection *= -1*r;
-}
-
-/**
  * @param direction indicate x or y or z direction
  * @return  the velocity in one direction
  */
@@ -102,7 +81,7 @@ void Ball::updateAcclrtn() {
     // if rolling on the bottom wall, there is no acceleration in y direction
  if(*(translation + 1) <= BOTTOM_WALL_Y + radius){
      *(acceleration + 1) = 0; // rolling on the ground
-    //TODO add ground friction using unit travel direction
+    //add ground friction using unit travel direction
      *acceleration = unitTravelDirection[0] * FRICTION;
      *(acceleration + 2) = unitTravelDirection[2] * FRICTION;
  } else {

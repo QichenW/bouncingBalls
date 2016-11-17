@@ -26,38 +26,38 @@ void CollisionDetector::detectAll(Object **all, int numberOfObjects) {
                 switch (j) {
                     case 0:
                         if(all[j]->getX() - b1->getX() <= b1->radius && b1->getVelocityIn(X_DIRECTION) > 0){
-                            b1->reverseVelocity(b1->velocity);
+                            reverseVelocity(b1->velocity);
                             fakeTheRotation(b1, 0);
                         }
                         break;
                     case 1:
                         if(b1->getX() - all[j]->getX() <= b1->radius && b1->getVelocityIn(X_DIRECTION) < 0){
-                            b1->reverseVelocity(b1->velocity);
+                            reverseVelocity(b1->velocity);
                             fakeTheRotation(b1, 0);
                         }
                         break;
                     case 2:
                         if(all[j]->getY() - b1->getY() <= b1->radius && b1->getVelocityIn(Y_DIRECTION) > 0){
-                            b1->reverseVelocity(b1->velocity+1);
+                            reverseVelocity(b1->velocity+1);
                             fakeTheRotation(b1, 1);
                         }
                         break;
                     case 3:
                         if(b1->getY() - all[j]->getY() <= b1->radius && b1->getVelocityIn(Y_DIRECTION) < 0){
-                            b1->reverseVelocity(b1->velocity+1);
+                            reverseVelocity(b1->velocity+1);
                             //TODO test this; Hitting the floor only change the rotation about x and z axes
                             fakeTheRotation(b1, 1);
                         }
                         break;
                     case 4:
                         if(all[j]->getZ() - b1->getZ() <= b1->radius && b1->getVelocityIn(Z_DIRECTION) > 0){
-                            b1->reverseVelocity(b1->velocity+2);
+                            reverseVelocity(b1->velocity+2);
                             fakeTheRotation(b1, 2);
                         }
                         break;
                     case 5:
                         if(b1->getZ() - all[j]->getZ() <= b1->radius && b1->getVelocityIn(Z_DIRECTION) < 0){
-                            b1->reverseVelocity(b1->velocity+2);
+                            reverseVelocity(b1->velocity+2);
                             fakeTheRotation(b1, 2);
                         }
                         break;
@@ -72,8 +72,17 @@ void CollisionDetector::detectAll(Object **all, int numberOfObjects) {
                 }
                 b2 = ((Ball *) all[j]);
                 if(Geometry::getDistance(b1->getTranslation(), b2->getTranslation())
-                        < b1->radius +  b2->radius) {
+                        <= b1->radius +  b2->radius) {
                     applyConservationLawForVelos(b1, b2);
+                    //TODO test this, Fake the rotation for either or both of them, if on the floor
+                    if(b1->getY() - Ball::BOTTOM_WALL_Y <= b1->radius){
+                        //TODO test this; Hitting the floor only change the rotation about x and z axes
+                        fakeTheRotation(b1, 1);
+                    }
+                    if(b2->getY() - Ball::BOTTOM_WALL_Y <= b2->radius){
+                        //TODO test this; Hitting the floor only change the rotation about x and z axes
+                        fakeTheRotation(b2, 1);
+                    }
                 }
             }
         }
@@ -112,7 +121,7 @@ void CollisionDetector::applyConservationLawForVelos(Ball *b1, Ball *b2) {
     //slove for new vx,vy,vz, and assign new velocities to balls
     for(i = 0; i < 3; i++){
         b = -1 * m1tom2Ratio * momentum[i];
-        c = 1 / 2 / b2->mass * powf(momentum[i],2) - energy[i];
+        c = (GLfloat) (1.0 / 2.0 / b2->mass * powf(momentum[i], 2) - energy[i]);
         delta = powf(b,2) -4 * a * c;
         if(delta < 0){
             //TODO throw exception
@@ -155,4 +164,25 @@ void CollisionDetector::fakeTheRotation(Ball *ball, int hitInTheDirectionOfWhich
         default:
             break;
     }
+}
+
+/**
+ * reverse the velocity when there is a collsion.
+ * r is set arbitarily to let bouncing stop at some point in time
+ * Reverse the ball's velocity in one direction due to collision with walls
+ * @param i identifies which direction
+ * @param ratio the amount of velocity presists
+ */
+void CollisionDetector::reverseVelocity(GLfloat *veloInOneDirection){
+    GLfloat r;
+    if(fabs(*veloInOneDirection) > 30){
+        r = 0.8;
+    }else if(fabs(*veloInOneDirection) > 14){
+        r = 0.7;
+    } else if(fabs(*veloInOneDirection) > 4){
+        r = 0.5;
+    } else {
+        r = 0;
+    }
+    *veloInOneDirection *= -1*r;
 }

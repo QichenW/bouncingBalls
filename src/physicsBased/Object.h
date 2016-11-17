@@ -36,9 +36,9 @@ public:
 
     bool isFixed;
     GLfloat mass;
+    static GLfloat BOTTOM_WALL_Y;
 protected:
     int id;
-    static GLfloat BOTTOM_WALL_Y;
     GLuint listId;
     GLfloat orientation[3]={};  //3
     GLfloat translation[3]={};  //3

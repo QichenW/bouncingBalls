@@ -35,12 +35,16 @@ void DrawObjects::prepareObjects(PhysicsPrefs *pPrefs, Object **pObjects) {
     DrawObjects::numberOfObjects = pPrefs->numberOfObjects;
     unsigned long i;
     int j,k;
-    GLfloat scale = 3.0;
+    GLfloat defaultScale = 3.0, tempMass;
     vector<GLfloat *> orientations, positions, velocities, angularVelos;
 
     GLuint wallObjID = SimpleObjLoader::loadObj((char *) WALL_OBJ_NAME, 1, 1.0, true, false, false);
 
-    GLuint ballObjID = SimpleObjLoader::loadObj((char *) BALL_OBJ_NAME, 2, scale, true, true, true);
+    GLuint sBallObjID = SimpleObjLoader::loadObj((char *) BALL_OBJ_NAME, 2, defaultScale, true, true, true);
+
+    GLuint mBallObjID = SimpleObjLoader::loadObj((char *) BALL_OBJ_NAME, 2, sqrtf(1.5)*defaultScale, true, true, true);
+
+    GLuint lBallObjID = SimpleObjLoader::loadObj((char *) BALL_OBJ_NAME, 2, sqrtf(2.0)*defaultScale, true, true, true);
 
     orientations = pPrefs->listOfEulerAngle;
     positions = pPrefs->listOfPositions;
@@ -63,9 +67,21 @@ void DrawObjects::prepareObjects(PhysicsPrefs *pPrefs, Object **pObjects) {
         if(k < NUMBER_OF_WALLS){
             *(pObjects + k) = new Object(k,wallObjID, 0, true, orientations.at(k), positions.at(k));
         } else {
-            *(pObjects + k) = new Ball(k, ballObjID, 1, false, orientations.at(k), positions.at(k),
-                                       velocities .at(k - NUMBER_OF_WALLS), angularVelos.at(k- NUMBER_OF_WALLS),
-                                       (GLfloat) (2.4 * scale)); //the radius of the ball in .obj file is 2.4
+            tempMass = pPrefs->listOfMass.at(k - NUMBER_OF_WALLS);
+            if(tempMass<1.48){
+                *(pObjects + k) = new Ball(k, sBallObjID, tempMass, false, orientations.at(k), positions.at(k),
+                                           velocities .at(k - NUMBER_OF_WALLS), angularVelos.at(k- NUMBER_OF_WALLS),
+                                           (GLfloat) (2.4 * defaultScale)); //the radius of the ball in .obj file is 2.4
+            } else if(tempMass < 1.98){
+                *(pObjects + k) = new Ball(k, mBallObjID, tempMass, false, orientations.at(k), positions.at(k),
+                                           velocities .at(k - NUMBER_OF_WALLS), angularVelos.at(k- NUMBER_OF_WALLS),
+                                           (GLfloat) (2.4 * sqrtf(tempMass)*  defaultScale));
+            } else {
+                *(pObjects + k) = new Ball(k, lBallObjID, tempMass, false, orientations.at(k), positions.at(k),
+                                           velocities .at(k - NUMBER_OF_WALLS), angularVelos.at(k- NUMBER_OF_WALLS),
+                                           (GLfloat) (2.4 * sqrtf(tempMass)*  defaultScale));
+            }
+
         }
     }
 

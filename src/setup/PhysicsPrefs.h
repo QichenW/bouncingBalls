@@ -37,6 +37,7 @@ public:
     vector<GLfloat*> listOfPositions;
     vector<GLfloat*> listOfVelocity;
     vector<GLfloat*> listOfAngularVelo;
+    vector<GLfloat> listOfMass;
 
     void setNumberOfObjects(int i);
 
@@ -47,6 +48,8 @@ public:
     void addOneVelocity(GLfloat *oneVelocity);
 
     void addOneAngularVelo(GLfloat *oneAngularVelo);
+
+    void addOneBallMass(GLfloat m);
 };
 
 
