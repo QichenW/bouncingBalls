@@ -10,6 +10,18 @@ const GLfloat Ball::GRAVITY[3] = {0, -9.8, 0};
 const GLfloat Ball::THRESHOLD = 0.5; // when slower that this, stop
 const GLfloat Ball::FRICTION = -0.8; // groundFriction is totally related to mass
 
+/**
+ *  Ball is a subclass of Object
+ * @param oId - id
+ * @param lId - polygon list id
+ * @param om - mass
+ * @param isF - is fixed (should be false)
+ * @param orienttn - initial orientation
+ * @param translatn - initial translation
+ * @param velocity - initial velocity
+ * @param angularVelocity - initial angular velocity
+ * @param r - radius
+ */
 Ball::Ball(int oId, int lId, GLfloat om, bool isF, GLfloat *orienttn,
      GLfloat *translatn, GLfloat * velocity, GLfloat * angularVelocity, GLfloat r)
         :Object(oId, lId, om, isF, orienttn, translatn){ // call the base class constructor first
@@ -25,20 +37,10 @@ Ball::Ball(int oId, int lId, GLfloat om, bool isF, GLfloat *orienttn,
     setUnitTravelDirection();
 }
 
-void Ball::changeAcceleration(GLfloat *acceleration) {
-    int i;
-    for (i = 0 ; i < 3; i++){
-        *(Ball::acceleration + i) = *(acceleration + i);
-    }
-}
-
-void Ball::changeAngluarAcclrtn(GLfloat *angularAcclrtn) {
-    int i;
-    for (i = 0 ; i < 3; i++){
-        *(Ball::angularAcclrtn + i) = *(angularAcclrtn + i);
-    }
-}
-
+/***
+ * update translation, rotation, velocity and angular velocity, then get the transformation matrix
+ * @param t - delta t
+ */
 void Ball::updateFlattenedTransformationMatrix(GLfloat t) {
     setUnitTravelDirection();
     updateAcclrtn();
@@ -72,11 +74,17 @@ GLfloat Ball::getVelocityIn(const int direction) {
     }
 }
 
-
+/***
+ * set unit travel direction, which is used to determine the acceleration caused by friction.
+ */
 void Ball::setUnitTravelDirection() {
     Geometry::getUnitDirection(unitTravelDirection, velocity);
 }
 
+/**
+ * update the acceleration for every time instance, if ball is in the air, it has g, if not in the air, it has
+ * acceleration caused by friction
+ */
 void Ball::updateAcclrtn() {
     // if rolling on the bottom wall, there is no acceleration in y direction
  if(*(translation + 1) <= BOTTOM_WALL_Y + radius){

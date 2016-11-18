@@ -74,13 +74,13 @@ void CollisionDetector::detectAll(Object **all, int numberOfObjects) {
                 if(Geometry::getDistance(b1->getTranslation(), b2->getTranslation())
                         <= b1->radius +  b2->radius) {
                     applyConservationLawForVelos(b1, b2);
-                    //TODO test this, Fake the rotation for either or both of them, if on the floor
+                    //Fake the rotation for either or both of them, if on the floor
                     if(b1->getY() - Ball::BOTTOM_WALL_Y <= b1->radius){
-                        //TODO test this; Hitting the floor only change the rotation about x and z axes
+                        // Hitting the floor only change the rotation about x and z axes
                         fakeTheRotation(b1, 1);
                     }
                     if(b2->getY() - Ball::BOTTOM_WALL_Y <= b2->radius){
-                        //TODO test this; Hitting the floor only change the rotation about x and z axes
+                        //Hitting the floor only change the rotation about x and z axes
                         fakeTheRotation(b2, 1);
                     }
                 }

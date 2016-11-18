@@ -2,8 +2,8 @@
 // Created by Qichen on 9/22/16.
 //
 
-#ifndef GLUTPROJECT_MATRIXGENERATOR_H
-#define GLUTPROJECT_MATRIXGENERATOR_H
+#ifndef BOUNCINGBALLS_MATRIXGENERATOR_H
+#define BOUNCINGBALLS_MATRIXGENERATOR_H
 // glut
 #if defined(__APPLE__)
 
@@ -28,4 +28,4 @@ private:
 
     static void getHomogeneousFromQuaternion(float *quaternion);
 };
-#endif //GLUTPROJECT_MATRIXGENERATOR_H
+#endif //BOUNCINGBALLS_MATRIXGENERATOR_H

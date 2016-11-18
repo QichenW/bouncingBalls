@@ -22,11 +22,6 @@ public:
     Ball(int oId, int lId, GLfloat om, bool isF, GLfloat *orienttn, GLfloat *translatn, GLfloat *velocity,
              GLfloat *angularVelocity, GLfloat r);
 
-
-    void changeAcceleration(GLfloat *acceleration);
-
-    void changeAngluarAcclrtn(GLfloat *angularAcclrtn);
-
     void updateAcclrtn();
 
     void updateFlattenedTransformationMatrix(GLfloat t);
@@ -58,6 +53,5 @@ private:
     void setUnitTravelDirection();
 
 };
-
 
 #endif //BOUNCINGBALLS_BALL_H

@@ -7,6 +7,9 @@
 
 GLfloat Object::BOTTOM_WALL_Y;
 
+/***
+ * Object is the base class of Ball; a wall is an instance of Object
+ */
 Object::Object(int id, GLuint listId, GLfloat mass, bool isFixed, GLfloat *orientation, GLfloat *translation) {
     Object::id = id;
     Object::listId = listId;
@@ -29,14 +32,15 @@ Object::Object(int id, GLuint listId, GLfloat mass, bool isFixed, GLfloat *orien
 
 }
 
+/***
+ * The following functions are all getters and setters
+ */
 void Object::setFlattenedTransformationMatrix(GLfloat *flattenedTransformationMatrix) {
     int i;
     for (i = 0 ; i < 16; i++) {
         *(Object::flattenedTransformationMatrix + i) = *(flattenedTransformationMatrix + i);
     }
 }
-
-Object::Object() {}
 
 GLuint Object::getListId() {
     return listId;

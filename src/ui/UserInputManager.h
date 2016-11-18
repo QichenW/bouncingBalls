@@ -2,8 +2,8 @@
 // Created by Qichen on 9/23/16.
 //
 
-#ifndef GLUTPROJECT_USERINPUTMANAGER_H
-#define GLUTPROJECT_USERINPUTMANAGER_H
+#ifndef BOUNCINGBALLS_USERINPUTMANAGER_H
+#define BOUNCINGBALLS_USERINPUTMANAGER_H
 
 // glut
 #if defined(__APPLE__)
@@ -19,9 +19,6 @@ class UserInputManager {
 private:
     static void setMouseMenuBehavior(int id);
 
-/** sub-menus not implemented for now **/
-//    static void orientationMenu(int id);
-//    static void inbetweeningMenu(int id);
 public:
     UserInputManager(int * window, PhysicsPrefs * preferences, Object ** allObjects);
     static void createMouseMenu();
@@ -32,4 +29,4 @@ public:
 };
 
 
-#endif //GLUTPROJECT_USERINPUTMANAGER_H
+#endif //BOUNCINGBALLS_USERINPUTMANAGER_H

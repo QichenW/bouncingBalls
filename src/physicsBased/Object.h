@@ -17,8 +17,6 @@ class Object {
 public:
     Object(int id, GLuint listId, GLfloat mass, bool isFixed, GLfloat *orientation, GLfloat *translation);
 
-    Object();
-
     void setFlattenedTransformationMatrix(GLfloat *flattenedTransformationMatrix);
 
     GLfloat *getFlattenedTransformationMatrix();

@@ -2,8 +2,8 @@
 // Created by Qichen on 9/21/16.
 //
 
-#ifndef GLUTPROJECT_SIMPLEOBJLOADER_H
-#define GLUTPROJECT_SIMPLEOBJLOADER_H
+#ifndef BOUNCINGBALLS_SIMPLEOBJLOADER_H
+#define BOUNCINGBALLS_SIMPLEOBJLOADER_H
 
 // glut
 #if defined(__APPLE__)
@@ -30,4 +30,4 @@ public:
     static void recordObjectAsQuadsWithNoVtNoVn();
 };
 
-#endif //GLUTPROJECT_SIMPLEOBJHEADER_H
+#endif //BOUNCINGBALLS_SIMPLEOBJHEADER_H
